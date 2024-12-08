@@ -2,8 +2,8 @@ import 'package:assignment_2/screens/about_us.dart';
 import 'package:assignment_2/screens/detail.dart';
 import 'package:flutter/material.dart';
 import '../widgets/cards.dart';
-import 'dart:convert'; // For jsonDecode
-import 'dart:async'; // For jsonDecode
+import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/services.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -24,23 +24,17 @@ class _MyHomePageState extends State<MyHomePage> {
     _fetchTasks();
   }
  
-    Future<void> _fetchTasks() async {
-      final String response = await rootBundle.loadString('assets/api/todos.json');
-      final List<dynamic> decodedData = json.decode(response);  
+  Future<void> _fetchTasks() async {
+    final String response = await rootBundle.loadString('assets/api/todos.json');
+    final List<dynamic> decodedData = json.decode(response);  
 
-      setState(() {
-        tasks = decodedData;
-      });
-    }
+    setState(() {
+      tasks = decodedData;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -90,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      'Im a full stack developer.\nYou have some tasks to do today.',
+                      'Im a full stack Lorem.\nYou have some tasks to do today.',
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ],
@@ -109,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     var e = tasks[index] as Map<String,dynamic>;
                   return GestureDetector(
                     onTap: () {
-                      final subtask = (e['subtasks'] as List).map((el) => {'title':el['title'],'status':el['status']}).toList();
-                      final subcomments = (e['comments'] as List).map((els) => {'text':els['comment'],'time':els['timestamp']}).toList();
+                      final status = (e['subtasks'] as List).map((el) => {'title':el['title'],'status':el['status']}).toList();
+                      final desc = (e['comments'] as List).map((els) => {'text':els['comment'],'time':els['timestamp']}).toList();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -120,8 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             startDate: tasks[index]['startDate'],
                             endDate: tasks[index]['dueDate'],
                             imagePath: tasks[index]['backgroundImage'],
-                            tasks: subtask,
-                            comments: subcomments,
+                            tasks: status,
+                            comments: desc,
                           ),
                         ),
                       );
